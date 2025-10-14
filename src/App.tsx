@@ -3,41 +3,49 @@ import ApplicationIcon from "./components/ApplicationIcon.tsx"
 import Window from "./components/Window.tsx"
 export default function App(){
   const [windows, setWindows] = useState([]);
-  const [instanceNo, setInstance] = useState(1)
+  const [instanceNo, setInstance] = useState(1);
+  const [activeWindow, setActiveWindow] = useState(null);
+
 
   function createWindow(label) {
-    setInstance(prevCount => {
-      const newInstance = prevCount + 1;
-      setWindows(old => [...old, { label, instance: newInstance }]);
-      console.log("Created window:", label, "→ instance", newInstance);
-      return newInstance;
-    });
+    const newInstance = instanceNo + 1;
+    setInstance(newInstance);
+    setWindows((previous) => [...previous, { label, instance: newInstance }]);
+    setActiveWindow(newInstance);
   }
 
-  function terminateWindow(instance: number) {
-    setWindows((prev) => prev.filter((w) => w.instanceNo !== instance));
+  const terminateWindow = (instance) => {
+    setWindows((prev) => prev.filter((w) => w.instance !== instance));
+    if (activeWindow === instance){
+      setActiveWindow(null);
+    }
   }
+  
   
   return(
     <div
         className = "deskcont" 
         style={{
-            height: "100%",
-            width: "100%"
+            height: "100vh",
+            width: "100vw",
+            background: "linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)",
+            overflow: "hidden",
+            display: "flex",
         }}>
         {windows.map(win => (
           <Window
             key={win.instance}
             application={win.label}
             instance={win.instance}
-            onClick={() => terminateWindow()}
+            onClick={(instance) => terminateWindow(instance)}
+            onFocus={() => setActiveWindow(win.instance)}
+            isActive={activeWindow === win.instance}
           />
         ))}
         <ApplicationIcon
           appname="info"
           icon="/assets/placeholder"
-          onClick={() => createWindow("info")}
-        />
+          onClick={() => createWindow("info")} />
         <ApplicationIcon appname="info" icon="/assets/placeholder" />
         <ApplicationIcon appname="info" icon="/assets/placeholder" />
  
