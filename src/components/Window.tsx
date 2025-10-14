@@ -1,6 +1,6 @@
 import { useRef , useState } from "react"
-import React from "react"
-
+import React from "react"   
+import WindowDebug from "./WindowDebug.tsx";
 type WindowProps = {
   application: string;
   instance: number;
@@ -73,7 +73,12 @@ export default function Window({ application, instance, onClick, onFocus, isActi
         document.removeEventListener("mouseup", stopDrag);
     }
 
-
+    function fetch_application(app){
+        switch(app) {
+            case "debug":
+                return <WindowDebug application={application} instance={instance} isActive={isActive}  />
+        }
+    }
 
     return(
         <div className="windowContainer" onClick={focus}
@@ -128,15 +133,7 @@ export default function Window({ application, instance, onClick, onFocus, isActi
                 x
                 </div>
             </div>
-            <div style={{position: "absolute", top: "40px", width: "200px", height: "100px", color: "white"}}>
-            &nbsp; ╱|、 <br />
-            (`&nbsp;&nbsp;- 7 <br />
-            &nbsp; |、⁻〵 <br />
-            &nbsp;&nbsp;じしˍ,)ノ <br />
-            app:        {application}<br />
-            instance:   {instance}<br />
-            isactive?:  {isActive.toString()}
-            </div>
+            {fetch_application(application)}
             <div className="windowResizeHandler" onMouseDown={resize}
             style={{
                 position: "absolute",

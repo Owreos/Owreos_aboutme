@@ -3,7 +3,7 @@ import ApplicationIcon from "./components/ApplicationIcon.tsx"
 import Window from "./components/Window.tsx"
 export default function App(){
   const [windows, setWindows] = useState([]);
-  const [instanceNo, setInstance] = useState(1);
+  const [instanceNo, setInstance] = useState(0);
   const [activeWindow, setActiveWindow] = useState(null);
 
 
@@ -43,11 +43,11 @@ export default function App(){
           />
         ))}
         <ApplicationIcon
-          appname="info"
-          icon="/assets/placeholder"
-          onClick={() => createWindow("info")} />
-        <ApplicationIcon appname="info" icon="/assets/placeholder" />
-        <ApplicationIcon appname="info" icon="/assets/placeholder" />
+          name="info"
+          iconsrc="/assets/placeholder.png"
+          onClick={() => createWindow("debug")} />
+        <ApplicationIcon name="info" iconsrc="/assets/placeholder.png" />
+        <ApplicationIcon name="info" iconsrc="/assets/placeholder.png" />
  
     </div>
   )

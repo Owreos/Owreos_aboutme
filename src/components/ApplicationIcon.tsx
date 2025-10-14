@@ -2,15 +2,18 @@ import React from "react";
 
 type AppIconProps = {
   name: string;
-  icon: string;
+  iconsrc: string;
   onClick: () => void;
 };
 
-export default function AppIcon({ name, icon, onClick }: AppIconProps) {
+export default function AppIcon({ name, iconsrc, onClick }: AppIconProps) {
   return (
     <div onClick={onClick}
     style={{
         display: "flex",
+        alignContent: "center",
+        justifyContent: "center",
+        margin: "auto",
         flexDirection: "column",
         alignItems: "center",
         gap: "8px",
@@ -29,11 +32,10 @@ export default function AppIcon({ name, icon, onClick }: AppIconProps) {
           alignItems: "center",
           justifyContent: "center",
           fontSize: "24px",
-        }}
-      >
-        📦
+        }}>
+          <img src={iconsrc} alt="" style={{height: "100%", width: "100%"}}/>
       </div>
-      <div className="subtext">{name}</div>
+      <div className="subtext" style={{color: "white", fontFamily: "Arial"}}>{name}</div>
     </div>
   );
 }
