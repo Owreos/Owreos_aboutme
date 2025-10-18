@@ -1,6 +1,9 @@
 import { useRef , useState } from "react"
 import React from "react"   
 import WindowDebug from "./WindowDebug.tsx";
+import FileMan from "./FileMan.tsx";
+import Viewer from "./Viewer.tsx";
+
 type WindowProps = {
   application: string;
   instance: number;
@@ -37,8 +40,8 @@ export default function Window({ application, instance, onClick, onFocus, isActi
         const dx = e.clientX - dragStart.current.x;
 
         setSize({
-            width: initialSize.current.width + dx,
-            height: initialSize.current.height + dy
+            width: Math.max(200, initialSize.current.width + dx),
+            height: Math.max(150, initialSize.current.height + dy)
         })
     }
     function stopRes(){
@@ -76,12 +79,19 @@ export default function Window({ application, instance, onClick, onFocus, isActi
     function fetch_application(app){
         switch(app) {
             case "debug":
+                console.log("returning debug")
                 return <WindowDebug application={application} instance={instance} isActive={isActive}  />
+            case "info":
+                console.log("returning info")
+                return <FileMan />
+            case "viewer":
+                console.log("returning viewer")
+                return <Viewer />
         }
     }
 
     return(
-        <div className="windowContainer" onClick={focus}
+        <div className="windowContainer" onClick={onFocus}
         style={{
             width: size.width,
             height: size.height,
@@ -92,7 +102,8 @@ export default function Window({ application, instance, onClick, onFocus, isActi
             border: isActive ? "2px solid #0084ff" : "2px solid #555",
             boxShadow: isActive ? "0 0 10px rgba(0,132,255,0.3)" : "0 0 5px rgba(0,0,0,0.5)",
             zIndex: isActive? 1000 : 100,
-            transition: "border-color 0.2"
+            transition: "border-color 0.2",
+            userSelect: "none",
         }}>
 
             <div className="window-header" onMouseDown={reposition} 
@@ -106,34 +117,46 @@ export default function Window({ application, instance, onClick, onFocus, isActi
                 display: "flex",
                 alignItems: "center",
 
-            }}>
+            }}> 
+                <span style={{color: "white"}}>{application}</span>
             
                 <div
                 className="terminaten"
                 onClick={(e) => {e.stopPropagation(); onClick(instance)}}
                 style={{
-                    width: "30px",
-                    height: "20px",
+                    width: "25px",
+                    height: "15px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     cursor: "pointer",
                     background: "#ff4444",
-                    borderRadius: "3px",
+                    borderBottom: "2px solid #c90a0aff",
+                    borderRight: "2px solid #c90a0aff  ",
+                    borderTop: "2px solid #ff4b4bff",
+                    borderLeft: "2px solid #ff4b4bff",
                     color: "#fff",
-                    fontFamily: "Arial",
                     fontWeight: "bold",
                     fontSize: "15px",
                     transition: "background 0.2s",
-                    padding: "auto",
                     position: "absolute",
                     right: "5px",
+                    top: "4.5px",
                     userSelect: "none",
                 }}>
                 x
                 </div>
             </div>
-            {fetch_application(application)}
+            
+            <div 
+            style={{position: "absolute",
+            top: "30px",
+            height: "calc(100% - 30px)",
+            width: "100%",
+            overflow: "scroll" }}>
+                {fetch_application(application)}
+            </div>
+            
             <div className="windowResizeHandler" onMouseDown={resize}
             style={{
                 position: "absolute",
@@ -142,7 +165,7 @@ export default function Window({ application, instance, onClick, onFocus, isActi
                 right: "2px",
                 bottom: "2px",
                 cursor: "nwse-resize",
-                background: "repeating-linear-gradient(45deg, #FFFFFF 2px, transparent 4px)",
+                background: isActive? "linear-gradient(135deg, #0084ff 50%, transparent 50%)" : "linear-gradient(135deg, #555 50%, transparent 50%)" ,
                 backgroundSize: "20px 20px"
             }}></div>
             

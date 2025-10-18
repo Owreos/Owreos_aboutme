@@ -13,7 +13,6 @@ export default function AppIcon({ name, iconsrc, onClick }: AppIconProps) {
         display: "flex",
         alignContent: "center",
         justifyContent: "center",
-        margin: "auto",
         flexDirection: "column",
         alignItems: "center",
         gap: "8px",
@@ -31,11 +30,10 @@ export default function AppIcon({ name, iconsrc, onClick }: AppIconProps) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: "24px",
         }}>
           <img src={iconsrc} alt="" style={{height: "100%", width: "100%"}}/>
       </div>
-      <div className="subtext" style={{color: "white", fontFamily: "Arial"}}>{name}</div>
+      <div className="subtext" style={{color: "white", fontSize: "15px"}}>{name}</div>
     </div>
   );
 }

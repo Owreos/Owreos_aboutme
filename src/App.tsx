@@ -14,11 +14,12 @@ export default function App(){
     setActiveWindow(newInstance);
   }
 
-  const terminateWindow = (instance) => {
+  function terminateWindow(instance){
+    if (activeWindow === instance){setActiveWindow(null);}
     setWindows((prev) => prev.filter((w) => w.instance !== instance));
-    if (activeWindow === instance){
-      setActiveWindow(null);
-    }
+  }
+  function newTab(tabname, tabcontent){
+    
   }
   
   
@@ -31,6 +32,10 @@ export default function App(){
             background: "linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)",
             overflow: "hidden",
             display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "60px",
+            fontFamily: "Segoe UI, Tahoma, sans-serif",
         }}>
         {windows.map(win => (
           <Window
@@ -42,13 +47,33 @@ export default function App(){
             isActive={activeWindow === win.instance}
           />
         ))}
-        <ApplicationIcon
-          name="info"
-          iconsrc="/assets/placeholder.png"
-          onClick={() => createWindow("debug")} />
-        <ApplicationIcon name="info" iconsrc="/assets/placeholder.png" />
-        <ApplicationIcon name="info" iconsrc="/assets/placeholder.png" />
- 
+        <div className="AppTray"
+        style={{
+          height: "100px",
+          width: "80%",
+          background: "rgba(81, 81, 81, 0.3)",
+          display: "flex",
+          flexDirection: "row",
+          gap: "40px",
+          borderRadius: "20px",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "absolute",
+          bottom: "10px",
+        }}>
+          <ApplicationIcon    
+            name="Debug"
+            iconsrc="/assets/placeholder.png"
+            onClick={() => createWindow("debug")} />
+          <ApplicationIcon
+            name="Info"
+            iconsrc="/assets/placeholder.png"
+            onClick={() => createWindow("info")} />
+          <ApplicationIcon
+            name="TextEditor"
+            iconsrc="/assets/placeholder.png"
+            onClick={() => createWindow("viewer")} />
+        </div>
     </div>
   )
 }

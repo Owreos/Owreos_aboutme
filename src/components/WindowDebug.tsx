@@ -3,7 +3,7 @@ import React from "react";
 
 export default function WindowDebug({application, instance, isActive}){
     return(
-            <div style={{position: "absolute", top: "40px", width: "200px", height: "100px", color: "white"}}>
+            <div style={{width: "100%", height: "100%", color: "white"}}>
                 &nbsp; ╱|、 <br />
                 (`&nbsp;&nbsp;- 7 <br />
                 &nbsp; |、⁻〵 <br />
